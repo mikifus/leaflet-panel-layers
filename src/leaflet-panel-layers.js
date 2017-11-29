@@ -39,7 +39,9 @@
             buildItem: null, //function that return row item html node(or html string)
             title: '', //title of panel
             className: '', //additional class name for panel
-            position: 'topright'
+            position: 'topright',
+            collapsibleIconCollapsed: ' + ',
+            collapsibleIconExpanded: ' - '
         },
 
         initialize: function (baseLayers, overlays, options) {
@@ -299,17 +301,17 @@
 
                 groupexp = L.DomUtil.create('i', this.className + '-icon', groupdiv);
                 if (isCollapsed === true)
-                    groupexp.innerHTML = ' + ';
+                    groupexp.innerHTML = this.options.collapsibleIconCollapsed;
                 else
-                    groupexp.innerHTML = ' - ';
+                    groupexp.innerHTML = this.options.collapsibleIconExpanded;
 
                 L.DomEvent.on(groupexp, 'click', function () {
                     if (L.DomUtil.hasClass(groupdiv, 'expanded')) {
                         L.DomUtil.removeClass(groupdiv, 'expanded');
-                        groupexp.innerHTML = ' + ';
+                        groupexp.innerHTML = self.options.collapsibleIconCollapsed;
                     } else {
                         L.DomUtil.addClass(groupdiv, 'expanded');
-                        groupexp.innerHTML = ' - ';
+                        groupexp.innerHTML = self.options.collapsibleIconExpanded;
                     }
                     self._updateHeight();
                 });
@@ -425,7 +427,6 @@
             else
                 this._form.style.height = h + 'px';
         },
-
         _expand: function () {
             L.DomUtil.addClass(this._container, 'expanded');
         },
